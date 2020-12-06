@@ -1,7 +1,7 @@
 /**
  * Returns current NBA League standings.
  * 
- * @return a two-dimensional array containing the requested data, with the first row containing the headers
+ * @return a two-dimensional array containing the data, with the first row containing the headers
  * @customfunction
  */
  
