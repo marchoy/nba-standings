@@ -5,7 +5,7 @@
  * @customfunction
  */
  
- function NBASTANDINGS() {
+function NBASTANDINGS() {
   var url = 'http://data.nba.net/1m/json/cms/today.json';
   var response = UrlFetchApp.fetch(url);
   var json = response.getContentText();
