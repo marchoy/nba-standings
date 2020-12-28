@@ -6,11 +6,11 @@
  */
  
 function NBASTANDINGS() {
-  var url = 'http://data.nba.net/1m/json/cms/today.json';
+  var url = 'http://data.nba.net/10s/prod/v1/today.json';
   var response = UrlFetchApp.fetch(url);
   var json = response.getContentText();
   var data = JSON.parse(json);
-  var year = data.sports_content['sports_meta']['season_meta']['season_year'];
+  var year = data.teamSitesOnly['seasonYear'];
   
   var url = 'http://data.nba.net/v2015/json/mobile_teams/nba/' + year + '/00_standings_02.json';
   var response = UrlFetchApp.fetch(url);
