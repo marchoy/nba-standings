@@ -6,16 +6,12 @@
  */
  
 function NBASTANDINGS() {
-  var url = 'http://data.nba.net/10s/prod/v1/today.json';
-  var response = UrlFetchApp.fetch(url);
-  var json = response.getContentText();
-  var data = JSON.parse(json);
-  var year = data.teamSitesOnly['seasonYear'];
+  var todayUrl = 'http://data.nba.net/10s/prod/v1/today.json';
+  var todayData = importJSON_(todayUrl);
+  var year = todayData.teamSitesOnly['seasonYear'];
   
-  var url = 'http://data.nba.net/v2015/json/mobile_teams/nba/' + year + '/00_standings_02.json';
-  var response = UrlFetchApp.fetch(url);
-  var json = response.getContentText();
-  var data = JSON.parse(json);
+  var standingsUrl = 'http://data.nba.net/v2015/json/mobile_teams/nba/' + year + '/00_standings_02.json';
+  var standingsData = importJSON_(standingsUrl);
 
   var standings = [];
   var headers = [
@@ -45,11 +41,11 @@ function NBASTANDINGS() {
   standings.push(headers);
   
   for (var co = 0; co < 2; co++) {
-    var conference = data.sta['co'][co]['val'];
+    var conference = standingsData.sta['co'][co]['val'];
     for (var di = 0; di < 3; di++) {
-      var division = data.sta['co'][co]['di'][di]['val'];
+      var division = standingsData.sta['co'][co]['di'][di]['val'];
       for (var t = 0; t < 5; t++) {
-        var teamData = data.sta['co'][co]['di'][di]['t'][t];
+        var teamData = standingsData.sta['co'][co]['di'][di]['t'][t];
         standings.push([
           conference,
           division,
@@ -78,4 +74,10 @@ function NBASTANDINGS() {
     }
   }
   return standings;
-}
+};
+
+function importJSON_(url) {
+  var response = UrlFetchApp.fetch(url);
+  var json = response.getContentText();
+  return JSON.parse(json);
+};
